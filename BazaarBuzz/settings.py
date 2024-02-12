@@ -29,6 +29,7 @@ SECRET_KEY = 'django-insecure-5g#)1$wj6_5gx-14uw&#as2e21e&^f#%a^3fi3h%=av0^h9*or
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://bazaar-buzz.onrender.com','https://*.127.0.0.1']
 
 
 # Application definition

@@ -9,7 +9,7 @@ class TopSubCategoryFilterBackend(filters.BaseFilterBackend):
         sub_category = request.query_params.get('sub_category')
         search_query = request.query_params.get('search')
 
-        if top_category:
+        if top_category and top_category.lower() != 'all':
             queryset = queryset.filter(top_category__name=top_category)
         if sub_category:
             queryset = queryset.filter(sub_category__name=sub_category)
@@ -21,7 +21,8 @@ class TopSubCategoryFilterBackend(filters.BaseFilterBackend):
             queryset = queryset.filter(name__icontains=search_query)
 
         return queryset
-        
+
+
 class ProductListCreate(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

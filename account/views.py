@@ -54,9 +54,9 @@ def activate(request, uid64, token):
         user.is_active = True
         user.save()
 
-        return redirect('login')
+        return redirect('https://bazaarbuzz.netlify.app/login')
     else:
-        return redirect('register')
+        return redirect('https://bazaarbuzz.netlify.app/signup/')
 
 
 

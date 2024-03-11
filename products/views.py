@@ -1,5 +1,5 @@
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product,ProductReview
+from .serializers import ProductSerializer,ProductReviewSerializer
 from rest_framework import viewsets,filters
 
 
@@ -28,3 +28,25 @@ class ProductListCreate(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter,TopSubCategoryFilterBackend]
     search_fields = ['name']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Price filtering
+        price_filter = self.request.query_params.get('price')
+        if price_filter == 'low_to_high':
+            queryset = queryset.order_by('price')
+        elif price_filter == 'high_to_low':
+            queryset = queryset.order_by('-price')
+
+        return queryset
+
+
+
+class ProductReviewViewSet(viewsets.ModelViewSet):
+    queryset = ProductReview.objects.all()
+    serializer_class = ProductReviewSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['product__id']  
+
+    

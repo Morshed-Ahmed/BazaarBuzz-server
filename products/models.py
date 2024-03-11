@@ -1,5 +1,6 @@
 from django.db import models
 from categories.models import TopCategory,SubCategory
+from django.contrib.auth.models import User
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -11,3 +12,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class ProductReview(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    review_text = models.TextField()
+    rating = models.IntegerField(default=5) 
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review for {self.product.name} by {self.user.username}"
